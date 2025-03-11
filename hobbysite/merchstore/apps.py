@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class Merchstore2Config(AppConfig):
+class MerchstoreConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'merchstore2'
+    name = 'merchstore'
