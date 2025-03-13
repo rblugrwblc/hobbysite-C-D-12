@@ -1,6 +1,5 @@
 from datetime import datetime
 from django.db import models
-from django.urls import reverse
 
 class Article_Category(models.Model):
     name = models.CharField(max_length=255)
@@ -14,7 +13,6 @@ class Article_Category(models.Model):
     def __str__(self):
         return self.name
     
-
 class Article(models.Model):
     title = models.CharField(max_length=255)
     category = models.ForeignKey(Article_Category,null=True,blank=True, on_delete=models.SET_NULL)

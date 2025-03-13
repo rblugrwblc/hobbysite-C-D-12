@@ -1,17 +1,12 @@
 # appname/views.py
 from django.http import HttpResponse
 from django.shortcuts import render
+from .models import Article
 
-def article_home(request):
-    ctx = {
-        "tasks": [
-        "task 1",
-        "task 2",
-        "task 3",
-        "task 4"
-        ]
-    }
-    return render(request, 'article_home.html', ctx)
+def article_list(request):
+    articles = Article.objects.all()
+    return render(request, 'article_list.html', {'articles':articles} )
 
-def article_detail(request):
-    return HttpResponse('This is the Articles DEtailed View')
+def article_detail(request, article_id):
+    article = Article.objects.get(id = article_id)
+    return render(request, 'article_detail.html', {'article':article} )
