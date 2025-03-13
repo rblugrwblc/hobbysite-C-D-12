@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 
-class Article_Category(models.Model):
+class ArticleCategory(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField() 
 
@@ -14,7 +14,7 @@ class Article_Category(models.Model):
     
 class Article(models.Model):
     title = models.CharField(max_length=255)
-    category = models.ForeignKey(Article_Category,
+    category = models.ForeignKey(ArticleCategory,
                                  null=True,
                                  blank=True, 
                                  on_delete=models.SET_NULL)

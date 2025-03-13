@@ -1,11 +1,12 @@
 from django.contrib import admin
-from .models import Article, Article_Category
+from .models import Article, ArticleCategory
 
-class Article_Admin(admin.ModelAdmin):
+class ArticleAdmin(admin.ModelAdmin):
     model = Article
 
-class Article_Category_Admin(admin.ModelAdmin):
-    model = Article_Category
 
-admin.site.register(Article, Article_Admin)
-admin.site.register(Article_Category, Article_Category_Admin)
+class ArticleCategoryAdmin(admin.ModelAdmin):
+    model = ArticleCategory
+    
+admin.site.register(Article, ArticleAdmin)
+admin.site.register(ArticleCategory, ArticleCategoryAdmin)
