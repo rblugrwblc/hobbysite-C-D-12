@@ -4,7 +4,6 @@ from .models import Article, ArticleCategory
 class ArticleAdmin(admin.ModelAdmin):
     model = Article
 
-
 class ArticleCategoryAdmin(admin.ModelAdmin):
     model = ArticleCategory
     

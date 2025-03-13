@@ -1,19 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
-
-<!-- taskapp/templates/task_list.html -->
-
     
-    {% block content %}
-        
-    <body><h1>{{ article.title }}</h1>
-        <p>Category: {{ article.category }}</p>
-        <p>Created On: {{ article.created_on }}</p>
-        <p>Updated On: {{ article.updated_on }}</p>
-        <div>
-            {{ article.entry|linebreaks }}
-        </div>
-    </body>    
-    
-        
-    {% endblock %}
+{% block content %}
+    <h1>{{ article.title }}</h1>
+    <p>Category: {{ article.category }}</p>
+    <p>Created On: {{ article.created_on }}</p>
+    <p>Updated On: {{ article.updated_on }}</p>
+    <div>
+        {{ article.entry|linebreaks }}
+    </div>
+{% endblock %}
