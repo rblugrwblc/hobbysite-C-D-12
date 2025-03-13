@@ -7,6 +7,5 @@ class Article_Admin(admin.ModelAdmin):
 class Article_Category_Admin(admin.ModelAdmin):
     model = Article_Category
 
-
-admin.site.register(Article_Admin)
-admin.site.register(Article_Category_Admin)
+admin.site.register(Article, Article_Admin)
+admin.site.register(Article_Category, Article_Category_Admin)
