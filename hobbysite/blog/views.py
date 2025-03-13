@@ -6,8 +6,6 @@ from .models import Article, Article_Category
 def article_list(request):
     categories = Article_Category.objects.all()
     articles = Article.objects.all()
-
-
     return render(request, 'article_list.html', {'articles':articles, 
                                                  'categories':categories} )
 

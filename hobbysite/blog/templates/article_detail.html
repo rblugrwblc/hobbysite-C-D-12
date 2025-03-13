@@ -6,7 +6,14 @@
     
     {% block content %}
         
-    <body><b>placeholder</b></body>    
+    <body><h1>{{ article.title }}</h1>
+        <p>Category: {{ article.category }}</p>
+        <p>Created On: {{ article.created_on }}</p>
+        <p>Updated On: {{ article.updated_on }}</p>
+        <div>
+            {{ article.entry|linebreaks }}
+        </div>
+    </body>    
     
         
     {% endblock %}
