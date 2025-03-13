@@ -1,5 +1,5 @@
-from datetime import datetime
 from django.db import models
+from django.urls import reverse
 
 class Article_Category(models.Model):
     name = models.CharField(max_length=255)
@@ -9,13 +9,15 @@ class Article_Category(models.Model):
         ordering = ['name']
         verbose_name_plural = "Article Categories"
 
-    
     def __str__(self):
         return self.name
     
 class Article(models.Model):
     title = models.CharField(max_length=255)
-    category = models.ForeignKey(Article_Category,null=True,blank=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey(Article_Category,
+                                 null=True,
+                                 blank=True, 
+                                 on_delete=models.SET_NULL)
     entry = models.TextField() 
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
@@ -25,4 +27,7 @@ class Article(models.Model):
         
     def __str__(self):
         return self.title
+    
+    def get_absolute_url(self):
+        return reverse("blog:article_detail", args=[str(self.id)])
    

@@ -1,12 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
 
-<!-- taskapp/templates/task_list.html -->
-
-    
-    {% block content %}
-        
-    <body><b>placeholder</b></body>    
-    
-        
-    {% endblock %}
+{% block content %}
+    <h1>Blog: Articles</h1>
+    {% for category in categories %} 
+    <ul>
+        <a> {{category.name}}</a>
+        {% for article in articles %}
+            {% if article.category.name == category.name %}
+            <li>
+                <a href="{{article.get_absolute_url}}">{{ article.title }}</a>
+                - Created on: {{ article.created_on }}
+            </li>
+            {% endif %}
+        {%endfor %}
+    </ul>
+    {% endfor %}
+{% endblock %}
