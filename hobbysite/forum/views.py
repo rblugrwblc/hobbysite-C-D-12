@@ -3,12 +3,12 @@ from django.http import HttpResponseNotFound
 from .models import PostCategory, Post
 
 
-def PostListView(request):
+def post_list(request):
     categories = PostCategory.objects.all()
     return render(request, 'post_list.html', {'categories': categories} )
 
 
-def PostDetailedView(request, post_id):
+def post_detail(request, post_id):
     try:
         post = Post.objects.get(id=post_id)
     except Post.DoesNotExist:
