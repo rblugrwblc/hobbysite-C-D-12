@@ -1,13 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ post.title }}</title>
-</head>
-<body>
-    <h1>{{ post.title }}</h1>
-    <p>{{ post.entry }}</p>
-    <p><strong>Category:</strong> {{ post.category.name }}</p>
-    <p><em>Created on: {{ post.created_on }}</em></p>
-    <p><em>Updated on: {{ post.updated_on }}</em></p>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Forum App{% endblock %}
+{% block header %}💬 Forum{% endblock %}
+{% block back_button %}<a href="{% url 'forum:list_view' %}">BACK</a>{% endblock %}
+{% block content %}
+    <text style="font-size:50px">{{ post.title }}</text>
+	<text style="color: rgba(0, 0, 0, 0.5)"><strong>Category: {{ post.category.name }}</strong></text>
+	<br>
+    <text style="color: rgba(0, 0, 0, 0.5)"><em>Created on: {{ post.created_on }}</em></text>
+    <text style="color: rgba(0, 0, 0, 0.5)"><em>Updated on: {{ post.updated_on }}</em></text>
+	<br>
+    <text class="text-wrap">{{ post.entry }}</text>
+{% endblock %}
