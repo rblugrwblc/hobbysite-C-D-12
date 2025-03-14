@@ -1,25 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Forum Website</title>
-</head>
-<body>
-    <div class="container">
-        <h1>Forum Website</h1>
-        {% for category in categories %}
-            <h2>{{ category.name }}</h2>
-            <p>{{ category.description }}</p>
-            <ul>
-                {% for post in category.posts.all %}
-                    <li class="post-item">
-                        <a href="{{ post.get_absolute_url }}" class="post-title">{{ post.title }}</a> -
-                        <span>{{ post.created_on|date }}</span>
-                    </li>
-                {% empty %}
-                    <li>No posts for this category</li>
-                {% endfor %}
-            </ul>
-        {% endfor %}
-    </div>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Forum Categories{% endblock %}
+
+{% block content %}
+    {% for category in categories %}
+        <h2>{{ category.name }}</h2>
+        <p>{{ category.description }}</p>
+        <ul>
+            {% for post in category.posts.all %}
+                <li class="post-item">
+                    <a href="{{ post.get_absolute_url }}" class="post-title">{{ post.title }}</a> -
+                    <span>{{ post.created_on|date }}</span>
+                </li>
+            {% empty %}
+                <li>No posts for this category</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+{% endblock %}
+

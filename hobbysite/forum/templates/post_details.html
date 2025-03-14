@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ post.title }}</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
     <h1>{{ post.title }}</h1>
     <p>{{ post.entry }}</p>
     <p><strong>Category:</strong> {{ post.category.name }}</p>
     <p><em>Created on: {{ post.created_on }}</em></p>
     <p><em>Updated on: {{ post.updated_on }}</em></p>
-</body>
-</html>
+{% endblock %}
