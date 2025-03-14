@@ -4,7 +4,7 @@ from .views import PostListView, PostDetailedView
 app_name = "forum"
 
 urlpatterns = [
-    path('threads/', PostListView, name="post_list"),
-    path('thread/<int:post_id>/', PostDetailedView, name="post_detail"),
+    path('threads/', PostListView, name="list_view"),
+    path('thread/<int:post_id>/', PostDetailedView, name="detail_view"),
 ]
 
