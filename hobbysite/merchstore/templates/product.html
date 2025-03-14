@@ -1,29 +1,11 @@
-<!DOCTYPE html>
-<html lang="en-US">
-<head>
-	<title>Merchandise Store</title>
-</head>
-
-<style>
-    .text-wrap {
-        white-space: normal;
-        width: 360px;
-		border-radius: 6px;
-        border: 1px solid black;
-		padding: 20px;
-    }
-</style>
-
-<body>
-	<h1> 🛍️ Merchandise Store</h1>
-	<hr>
-	<text><a href="{% url 'merchstore:list_view' %}">BACK</a></text>
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Merchandise Store App{% endblock %}
+{% block header %}🛍️ Merchandise Store{% endblock %}
+{% block back_button %}<a href="{% url 'merchstore:list_view' %}">BACK</a>{% endblock %}
+{% block content %}
+	<text style="font-size:50px">{{ product.name }}</text>
+	<text style="color: rgba(0, 0, 0, 0.5)">PHP {{ product.price }}   //   Item Type: {{ product.product_type.name }}</text>
 	<br>
-	<div style="width: 85vw; margin: 0 auto; display: grid">
-		<text style="font-size:50px">{{ product.name }}</text>
-		<text style="color: rgba(0, 0, 0, 0.5)">PHP {{ product.price }}   //   Item Type: {{ product.product_type.name }}</text>
-		<br>
-		<text class="text-wrap"> {{ product.description }} </text>
-	</div>
-</body>
-</html>
+	<text class="text-wrap"> {{ product.description }} </text>
+{% endblock %}

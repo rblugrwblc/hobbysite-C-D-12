@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+<style>
+    .text-wrap {
+        white-space: normal;
+        width: 360px;
+		border-radius: 6px;
+        border: 1px solid black;
+		padding: 20px;
+    }
+</style>
+
+<body>
+	<h1>{% block header %}{% endblock %}</h1>
+	<hr>
+	{% block back_button %}{% endblock %}
+	<br>
+    <div id="content" style="width: 85vw; margin: auto; display: grid">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
