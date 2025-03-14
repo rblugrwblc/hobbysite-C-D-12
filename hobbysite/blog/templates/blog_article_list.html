@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% block title %}Blog App{% endblock %}
+{% block header %}🌐 Blog{% endblock %}
 {% block content %}
-    <h1>Blog: Articles</h1>
+    <h1>Articles</h1>
     {% for category in categories %} 
     <ul>
         <a> {{category.name}}</a>
         {% for article in articles %}
             {% if article.category.name == category.name %}
             <li>
-                <a href="{{article.get_absolute_url}}">{{ article.title }}</a>
+                <a href="{% url 'blog:detail_view' article.id %}">{{ article.title }}</a>
                 - Created on: {{ article.created_on }}
             </li>
             {% endif %}
