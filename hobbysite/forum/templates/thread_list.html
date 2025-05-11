@@ -6,20 +6,7 @@
 
 <div style="display: flex; justify-content: space-between; align-items: center;">
     <a href="{% url 'forum:create_view' %}">➕ Create New Thread</a>
-    {% if user.is_authenticated %}
-        <form method="POST" action="{% url 'logout' %}">
-            {% csrf_token %}
-            <button type="submit">Logout</button>
-        </form>
-    {% else %}
-        <span></span>  
-        <form action="{% url 'login' %}">
-            <button type="submit">Login</button>
-        </form>
-    {% endif %}
 </div>
-
-
 
 {% if user.is_authenticated %}
     <h2 style="margin-bottom: 0.3rem;">Your Threads</h2>
