@@ -32,7 +32,13 @@ def wiki_article_add(request):
 @login_required 
 def wiki_article_edit(request, pk): 
     article = get_object_or_404(Article, pk=pk)
-    
+
+    # Go to edit page, first check if user profile exists and then if they are author
+    try:
+        user_profile = request.user.profile
+    except:
+        return redirect(reverse('wiki:list_view')) 
+
     if article.author != request.user.profile: 
         return redirect(reverse('wiki:list_view'))
     
