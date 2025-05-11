@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Forum App{% endblock %}
+{% block header %}💬 Forum{% endblock %}
+{% block back_button %}
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<a href="{% url 'forum:list_view' %}">Back to Thread List</a>
+{% if user.is_authenticated %}
+    <form method="POST" action="{% url 'logout' %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+{% else %}
+    <form action="{% url 'login' %}">
+        <button type="submit">Login</button>
+    </form>
+{% endif %}
+</div>
+{% endblock %}
+
+
+{% block content %}
+    <h1 style="font-size: 32px; margin-bottom: 0.2rem;">{{ thread.title }}</h1>
+    <p style="color: rgba(0, 0, 0, 0.5); margin: 0;"><strong>Category: {{ thread.category.name }}</strong></p>
+    <p style="color: rgba(0, 0, 0, 0.5); margin: 0;"><em>Created on: {{ thread.created_on }}</em></p>
+
+    <div style="display: flex; align-items: center; gap: 3rem; color: rgba(0, 0, 0, 0.5); margin-bottom: 0.5rem;">
+        <em>Updated on: {{ thread.updated_on }}</em>
+        {% if user.is_authenticated and thread.author == user.profile %}
+            <a href="{% url 'forum:edit_view' thread.id %}">
+                <button type="button">Edit Thread</button>
+            </a>
+        {% endif %}
+    </div>
+
+    <p class="text-wrap" style="margin-top: 0.5rem;">{{ thread.entry }}</p>
+
+    {% if thread.image %}
+        <img src="{{ thread.image.url }}" alt="{{ thread.title }} image"
+             style="max-width: 800px; max-height: 600px; height: auto; width: auto; margin-top: 0.5rem;">
+    {% endif %}
+
+
+
+<h3>Comments</h3>
+{% for comment in comments %}
+    <p><strong>{{ comment.author.display_name }}</strong> ({{ comment.created_on|date }}):<br>{{ comment.entry }}</p>
+{% empty %}
+    <p>No comments yet.</p>
+{% endfor %}
+
+{% if user.is_authenticated %}
+<h3>Add a Comment</h3>
+<form method="POST">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <button type="submit">Add Comment</button>
+</form>
+{% endif %}
+
+<hr>
+<h4 style="margin-bottom: 0.1rem;">More Threads for {{ thread.category.name }}</h4>
+<ul>
+    {% for related in related_threads %}
+        <li><a href="{% url 'forum:detail_view' related.id %}">{{ related.title }}</a></li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
