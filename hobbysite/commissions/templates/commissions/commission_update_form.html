@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Commissions App{% endblock %}
+{% block header %}📝 Commissions{% endblock %}
+{% block content %}
+<main>
+	<form action="" method="POST">
+		{{ form.as_p }}
+		<button type="submit">Update Commission</button>
+	</form>
+</main>
+{% endblock %}

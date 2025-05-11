@@ -1,14 +1,18 @@
 from django.contrib import admin
-from .models import Commission, Comment
+from .models import Commission, Job
 
 class CommissionAdmin(admin.ModelAdmin):
-    list_display = ('title', 'people_required', 'created_on', 'updated_on')
-    search_fields = ('title', 'description')
+    list_display = [
+        "title",
+        "description",
+        "status",
+        "created_on",
+        "updated_on",
+    ]
+    list_filter = ["created_on", "status"]
+    search_fields = ["title"]
+    list_display_links = ["title"]
 
-class CommentAdmin(admin.ModelAdmin):
-    list_display = ('commission', 'created_on')
-    search_fields = ('entry',)
 
-admin.site.register(Commission)
-admin.site.register(Comment)
-# Register your models here.
+admin.site.register(Commission, CommissionAdmin)
+admin.site.register(Job)
