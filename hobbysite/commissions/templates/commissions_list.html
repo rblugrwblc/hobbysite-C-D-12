@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Commissions App{% endblock %}
+{% block header %}📝 Commissions{% endblock %}
+{% block content %}
+    <h1>Commission List</h1>
+    <ul>
+        {% for commission in commissions %}
+            <li>
+                <a href="{% url 'commissions:detail_view' commission.id %}">
+                    {{ commission.title }}
+                </a>
+                - Created on {{ commission.created_on }}
+            </li>
+			<br>
+        {% empty %}
+            <li>No commissions available.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
