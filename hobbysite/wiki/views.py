@@ -18,6 +18,8 @@ def wiki_article_detail(request, pk):
 def wiki_article_add(request):
     if request.method == 'POST':
         wiki_article_form = ArticleForm(request.POST)
+
+        # Make sure user has a profile, if none redirect to list_view
         try: 
             user_profile = request.user.profile
         except: 
@@ -38,7 +40,7 @@ def wiki_article_add(request):
 def wiki_article_edit(request, pk): 
     article = get_object_or_404(Article, pk=pk)
 
-    # Go to edit page, first check if user profile exists and then if they are author
+    # Check if user profile exists and then if they are author
     try:
         user_profile = request.user.profile
     except:
