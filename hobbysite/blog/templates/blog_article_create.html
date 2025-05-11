@@ -5,4 +5,9 @@
 
 {% block content %}
     <h1>Blog: Articles Creation</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ article_form.as_p }}
+        <button type="submit" name="article_submit">Post</button>
+    </form>
 {% endblock %}

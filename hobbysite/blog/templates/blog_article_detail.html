@@ -39,7 +39,7 @@
         <small>Add Comment:</small>
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+            {{ comment_form.as_p }}
             <button type="submit" name="comment_submit">Post</button>
         </form>
         {% endif %}
