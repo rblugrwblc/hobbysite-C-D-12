@@ -34,7 +34,7 @@ class Thread(models.Model):
     
 
 class Comment(models.Model):
-    author = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, related_name='forum_comments')
     thread = models.ForeignKey(Thread, on_delete=models.CASCADE, related_name='comments')
     entry = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
