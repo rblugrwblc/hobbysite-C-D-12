@@ -32,21 +32,19 @@ class Article(models.Model):
         return self.title
     
     def get_absolute_url(self):
-        return reverse("blog:article_detail", args=[str(self.id)])
+        return reverse("blog:detail_view", args=[str(self.id)])
     
 class Comment(models.Model):
     article = models.ForeignKey(Article, 
                                 null=True,
                                 blank=True,
-                                on_delete=models.CASCADE)
-    author = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, related_name='comments')
+                                on_delete=models.CASCADE,
+                                related_name='comments')
+    author = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, related_name='forum_comments')
     entry = models.TextField() 
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['created_on']
-
-    def __str__(self):
-        return self.title
+        ordering = ['-created_on']
    
