@@ -24,4 +24,5 @@ urlpatterns = [
     path('forum/', include('forum.urls')),
     path('blog/', include('blog.urls', namespace="blog")),
     path('merchstore/', include("merchstore.urls")),
+    path('', include('user_management.urls')),
 ]

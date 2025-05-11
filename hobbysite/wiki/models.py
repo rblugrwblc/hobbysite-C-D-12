@@ -3,7 +3,7 @@ from django.db import models
 class ArticleCategory(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
-
+    
     class Meta:
         ordering = ['name']
         verbose_name_plural = "Article Categories"
