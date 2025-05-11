@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Blog App{% endblock %}
+{% block header %}🌐 Blog{% endblock %}
+{% block back_button %}<a href="{% url 'blog:list_view' %}">BACK</a>{% endblock %}
+{% block content %}
+    <text style="font-size:50px">{{ article.title }}</text>
+    <text style="color: rgba(0, 0, 0, 0.5)">Category: {{ article.category }}</text>
+    <text style="color: rgba(0, 0, 0, 0.5)">Created On: {{ article.created_on }}</text>
+    <text style="color: rgba(0, 0, 0, 0.5)">Updated On: {{ article.updated_on }}</text>
+	<br>
+    <div class="text-wrap">
+        {{ article.entry|linebreaks }}
+    </div>
+{% endblock %}
