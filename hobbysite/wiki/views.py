@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from .models import Article, ArticleCategory
-from .forms import ArticleForm
+from .models import Article, ArticleCategory, Comment
+from .forms import ArticleForm, CommentForm
 
 def wiki_article_list(request):
     categories = ArticleCategory.objects.all()
@@ -12,7 +12,25 @@ def wiki_article_list(request):
 
 def wiki_article_detail(request, pk):
     article = get_object_or_404(Article, pk=pk)
-    return render(request, 'wiki_article_detail.html', {'article': article})
+    
+    related_articles = Article.objects.filter(category=article.category).exclude(pk=article.pk)[:2]
+
+    comments = article.comments.all()
+    comment_form = CommentForm(request.POST or None)
+
+    if comment_form.is_valid() and request.user.is_authenticated:
+        comment = comment_form.save(commit=False)
+        comment.author = request.user.profile
+        comment.article = article
+        comment.save()
+        return redirect('wiki:detail_view', pk=article.pk)
+
+    return render(request, 'wiki_article_detail.html', {
+        'article': article,
+        'related_articles': related_articles,
+        'comments': comments,
+        'comment_form': comment_form,
+    })
 
 @login_required
 def wiki_article_add(request):

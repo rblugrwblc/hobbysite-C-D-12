@@ -4,22 +4,73 @@
 {% block header %}📙 Online Wiki{% endblock %}
 {% block back_button %}<a href="{% url 'wiki:list_view' %}">BACK</a>{% endblock %}
 {% block content %}
-    <text style="font-size:50px">{{ article.title }}</text>
+<text style="font-size:50px">{{ article.title }}</text>
 
-    {% if article.author %}
-    <p style="color: rgba(0, 0, 0, 0.5)">
-      <strong>Author:</strong> {{ article.author.display_name }} ({{ article.author.email }})
-    </p>
-  {% else %}
-    <p style="color: rgba(0, 0, 0, 0.5)">
-      <strong>Author:</strong> <em>Deleted User</em>
-    </p>
-  {% endif %}
-  
-    <text style="color: rgba(0, 0, 0, 0.5)"><strong>Category: {{ article.category }}</strong></text>
-    <text style="color: rgba(0, 0, 0, 0.5)">Created On: {{ article.created_on }}</text>
-    <text style="color: rgba(0, 0, 0, 0.5)">Updated On: {{ article.updated_on }}</text>
-    <div>
-        {{ article.entry|linebreaks }}
+{% if article.author %}
+<p style="color: rgba(0, 0, 0, 0.5)">
+  <strong>Author:</strong> {{ article.author.display_name }} ({{ article.author.email }})
+</p>
+{% else %}
+<p style="color: rgba(0, 0, 0, 0.5)">
+  <strong>Author:</strong> <em>Deleted User</em>
+</p>
+{% endif %}
+
+<text style="color: rgba(0, 0, 0, 0.5)"><strong>Category: {{ article.category }}</strong></text>
+<text style="color: rgba(0, 0, 0, 0.5)">Created On: {{ article.created_on }}</text>
+<text style="color: rgba(0, 0, 0, 0.5)">Updated On: {{ article.updated_on }}</text>
+
+<div>
+  {{ article.entry|linebreaks }}
+</div>
+
+{# Show at least one image #}
+{% if article.images.first %}
+  <div style="margin-top: 1rem;">
+    <img src="{{ article.images.first.image.url }}" alt="Article Image" style="max-width: 100%; border-radius: 8px;">
+  </div>
+{% endif %}
+
+{# Edit link if logged-in user is article owner #}
+{% if request.user.is_authenticated and request.user.profile == article.author %}
+  <p><a href="{% url 'wiki:edit_view' article.pk %}">✏️ Edit this article</a></p>
+{% endif %}
+
+<hr>
+<h3>💬 Comments ({{ comments.count }})</h3>
+<div>
+  {% for comment in comments %}
+    <div style="margin-bottom: 1rem; border-left: 3px solid #ddd; padding-left: 1rem;">
+      <strong>{{ comment.author.display_name }}</strong>
+      <span style="color: gray; font-size: small;">on {{ comment.created_on }}</span>
+      <p>{{ comment.entry }}</p>
     </div>
+  {% empty %}
+    <p>No comments yet. Be the first to comment!</p>
+  {% endfor %}
+</div>
+
+<hr>
+
+{# Only show comment form if logged in #}
+{% if request.user.is_authenticated %}
+  <h4>Add a Comment</h4>
+  <form method="post">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <button type="submit">Submit</button>
+  </form>
+{% else %}
+  <p><em><a href="{% url 'login' %}?next={{ request.path }}">Log in</a> to comment.</em></p>
+{% endif %}
+
+<hr>
+<h4>📚 Read More from {{ article.category }}</h4>
+<ul>
+  {% for related in related_articles %}
+    <li><a href="{% url 'wiki:detail_view' related.pk %}">{{ related.title }}</a></li>
+  {% empty %}
+    <li>No other articles in this category yet.</li>
+  {% endfor %}
+</ul>
 {% endblock %}
