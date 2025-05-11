@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Forum App{% endblock %}
+{% block header %}💬 Forum{% endblock %}
+{% block content %}
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <a href="{% url 'forum:create_view' %}">➕ Create New Thread</a>
+</div>
+
+{% if user.is_authenticated %}
+    <h2 style="margin-bottom: 0.3rem;">Your Threads</h2>
+    <ul>
+        {% for thread in user_threads %}
+            <li>
+                <a href="{% url 'forum:detail_view' thread.id %}">{{ thread.title }}</a>
+            </li>
+        {% empty %}
+            <li>No threads yet.</li>
+        {% endfor %}
+    </ul>
+    <hr>
+{% endif %}
+
+<h2>All Threads by Category</h2>
+{% for category in categories %}
+    <h3 style="margin-bottom: 0.1rem;">{{ category.name }}</h3>
+    <p style="color: rgba(0, 0, 0, 0.5); margin-bottom: 0.3rem;">{{ category.description }}</p>
+    <ul>
+		{% for thread in category.filtered_threads %}
+        <li style="margin-bottom: 0.2rem;">
+            <a href="{% url 'forum:detail_view' thread.id %}">{{ thread.title }}</a>
+        </li>
+    {% empty %}
+        <li>No threads in this category.</li>
+    {% endfor %}
+    </ul>
+    <hr>
+{% endfor %}
+
+{% endblock %}
