@@ -10,7 +10,6 @@
             {% if article.category.name == category.name %}
             <li>
                 <a href="{{article.get_absolute_url}}">{{ article.title }}</a>
-                - Created on: {{ article.created_on }}
             </li>
             {% endif %}
         {%endfor %}
