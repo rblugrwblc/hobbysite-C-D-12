@@ -18,6 +18,11 @@ def wiki_article_detail(request, pk):
 def wiki_article_add(request):
     if request.method == 'POST':
         wiki_article_form = ArticleForm(request.POST)
+        try: 
+            user_profile = request.user.profile
+        except: 
+            return redirect(reverse('wiki:list_view'))
+        
         if wiki_article_form.is_valid():
             form = wiki_article_form.save(commit=False)
             form.author = request.user.profile
