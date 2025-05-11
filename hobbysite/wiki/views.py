@@ -29,6 +29,24 @@ def wiki_article_add(request):
 
     return render(request, 'wiki_article_form.html', {'form': form}) 
 
+@login_required 
+def wiki_article_edit(request, pk): 
+    article = get_object_or_404(Article, pk=pk)
+    
+    if article.author != request.user.profile: 
+        return redirect(reverse('wiki:list_view'))
+    
+    if request.method == 'POST': 
+        form = ArticleForm(request.POST, request.FILES, instance=article)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('wiki:list_view'))
+    
+    else:
+        form = ArticleForm(instance = article)
+    
+    return render(request, 'wiki_article_form.html', {'form': form})
+
 
 def home(request): 
     return HttpResponse("<h1>Welcome to the Wiki.</h1><p>Go to <a href='/wiki/articles/'>Articles</a></p>")
