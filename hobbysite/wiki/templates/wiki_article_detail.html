@@ -4,11 +4,62 @@
 {% block header %}📙 Online Wiki{% endblock %}
 {% block back_button %}<a href="{% url 'wiki:list_view' %}">BACK</a>{% endblock %}
 {% block content %}
+
     <text style="font-size:50px">{{ article.title }}</text>
+    <img src="{{ article.header_image.url }}" alt="{{ article.title }}">
+
+    {% if article.author %}
+      <p style="color: rgba(0, 0, 0, 0.5)">
+        <strong>Author:</strong> {{ article.author.display_name }} ({{ article.author.email }})
+      </p>
+    {% else %}
+      <p style="color: rgba(0, 0, 0, 0.5)">
+        <strong>Author:</strong> <em>Deleted User</em>
+      </p>
+    {% endif %}
+    
     <text style="color: rgba(0, 0, 0, 0.5)"><strong>Category: {{ article.category }}</strong></text>
     <text style="color: rgba(0, 0, 0, 0.5)">Created On: {{ article.created_on }}</text>
     <text style="color: rgba(0, 0, 0, 0.5)">Updated On: {{ article.updated_on }}</text>
+    
     <div>
         {{ article.entry|linebreaks }}
     </div>
+
+    {% if is_author %}
+      <p><a href="{% url 'wiki:edit_view' pk=article.pk %}">✏️ Edit this article</a></p>
+    {% endif %}
+
+    <hr>
+    <h4>More from {{ article.category.name }}</h4>
+    <ul>
+      {% for related in related_articles %}
+        <li><a href="{% url 'wiki:detail_view' pk=related.pk %}">{{ related.title }}</a></li>
+      {% endfor %}
+    </ul>
+
+    <hr>
+    <h3>💬 Comments ({{ article.comments.count }})</h3>
+    <div>
+      {% for comment in comments %}
+        <div style="margin-bottom: 1rem; border-left: 3px solid #ddd; padding-left: 1rem;">
+          <strong>{{ comment.author.display_name }}</strong> 
+          <span style="color: gray; font-size: small;">on {{ comment.created_on }}</span>
+          <p>{{ comment.entry }}</p>
+        </div>
+      {% empty %}
+        <p>No comments yet. Be the first to comment!</p>
+      {% endfor %}
+    </div>
+
+    {% if user.is_authenticated %}
+      <hr>
+      <h4>Add a Comment</h4>
+      <form method="post">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <button type="submit">Submit</button>
+      </form>
+    {% endif %}
+
 {% endblock %}
