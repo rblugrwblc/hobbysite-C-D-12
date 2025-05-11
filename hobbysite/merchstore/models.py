@@ -34,10 +34,3 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
-
-class Transaction(models.Model):
-    buyer = models.ForgeignKey(Profile, on_delete=models.SET_NULL)
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL)
-    amount = models.IntegerField()
-    status = models.CharField()
-    created_on = models.DateTimeField(auto_now_add=True)
