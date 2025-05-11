@@ -5,6 +5,17 @@
 {% block back_button %}<a href="{% url 'wiki:list_view' %}">BACK</a>{% endblock %}
 {% block content %}
     <text style="font-size:50px">{{ article.title }}</text>
+
+    {% if article.author %}
+    <p style="color: rgba(0, 0, 0, 0.5)">
+      <strong>Author:</strong> {{ article.author.display_name }} ({{ article.author.email }})
+    </p>
+  {% else %}
+    <p style="color: rgba(0, 0, 0, 0.5)">
+      <strong>Author:</strong> <em>Deleted User</em>
+    </p>
+  {% endif %}
+  
     <text style="color: rgba(0, 0, 0, 0.5)"><strong>Category: {{ article.category }}</strong></text>
     <text style="color: rgba(0, 0, 0, 0.5)">Created On: {{ article.created_on }}</text>
     <text style="color: rgba(0, 0, 0, 0.5)">Updated On: {{ article.updated_on }}</text>
