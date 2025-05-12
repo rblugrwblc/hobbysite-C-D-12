@@ -17,6 +17,17 @@
     <text style="color: rgba(0, 0, 0, 0.5)">Updated On: {{ article.updated_on }}</text>
 	<br>
 
+    {% if article.images.all %}
+        <a>Image Gallery</a>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+        {% for image in article.images.all %}
+        <img src='{{ image.article_gallery.url }}'
+            style="max-width: 150px;">
+        
+        {% endfor %}
+        </div>
+    {% endif %}
+    
     <div class="text-wrap">
         {{ article.entry|linebreaks }}
     </div>
