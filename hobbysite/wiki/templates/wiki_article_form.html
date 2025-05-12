@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Wiki App{% endblock %}
+{% block header %}📙 Online Wiki 📙{% endblock %}
+{% block content %}
+  <h1>{% if form.instance.pk %}Edit Article{% else %}Create New Article{% endif %}</h1>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">{% if form.instance.pk %}Save Changes{% else %}Create Article{% endif %}</button>
+  </form>
+
+  <!-- Link back to article list -->
+  <a href="{% url 'wiki:list_view' %}">Back to Articles</a>
+{% endblock %}

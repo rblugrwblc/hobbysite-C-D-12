@@ -1,26 +1,44 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}Wiki App{% endblock %}
-{% block header %}📙 Online Wiki{% endblock %}
+{% block header %}📙 Online Wiki 📙{% endblock %}
 {% block content %}
     <text style="font-size:50px">Articles</text>
-    {% for category in categories %}
-        <h2>{{ category.name }}</h2>  <!-- Display category name -->
+
+    {% if user.is_authenticated and user_articles %}
+        <h2>Your Articles</h2>
         <ul>
-            {% for article in articles %}
-                {% if article.category == category %}
+            {% for article in user_articles %}
+                <li>
+                    <a href="{% url 'wiki:detail_view' article.id %}">{{ article.title }}</a>
+                    - Created on: {{ article.created_on }}
+                </li>
+            {% endfor %}
+        </ul>
+        <hr style="width: 100%">
+    {% endif %}
+
+    <h2>All Articles</h2>
+    {% for category, articles in articles_by_category.items %}
+        {% if articles %}  {# Only show category if it has articles #}
+            <h3>{{ category.name }}</h3>
+            <ul>
+                {% for article in articles %}
                     <li>
                         <a href="{% url 'wiki:detail_view' article.id %}">{{ article.title }}</a>
                         - Created on: {{ article.created_on }}
                     </li>
-                {% endif %}
-            {% empty %}
-                <li>No articles available.</li>
-            {% endfor %}
-			<br>
-        </ul>
-		<hr style="width: 100%">
+                {% empty %}
+                    <li>No articles in this category.</li>
+                {% endfor %}
+            </ul>
+            <hr style="width: 100%">
+        {% endif %}
     {% empty %}
         <p>No categories available.</p>
     {% endfor %}
+
+    {% if user.is_authenticated %}
+        <p><a href="{% url 'wiki:article_update' %}">➕ Create a New Article</a></p>
+    {% endif %}
 {% endblock %}
