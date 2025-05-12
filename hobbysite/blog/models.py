@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from user_management.models import Profile 
 
 class ArticleCategory(models.Model):
     name = models.CharField(max_length=255)
@@ -14,6 +15,7 @@ class ArticleCategory(models.Model):
     
 class Article(models.Model):
     title = models.CharField(max_length=255)
+    author = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, related_name='articles')
     category = models.ForeignKey(ArticleCategory,
                                  null=True,
                                  blank=True, 
@@ -30,20 +32,19 @@ class Article(models.Model):
         return self.title
     
     def get_absolute_url(self):
-        return reverse("blog:article_detail", args=[str(self.id)])
+        return reverse("blog:detail_view", args=[str(self.id)])
     
 class Comment(models.Model):
     article = models.ForeignKey(Article, 
                                 null=True,
                                 blank=True,
-                                on_delete=models.CASCADE)
+                                on_delete=models.CASCADE,
+                                related_name='comments')
+    author = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, related_name='forum_comments')
     entry = models.TextField() 
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['created_on']
-
-    def __str__(self):
-        return self.title
+        ordering = ['-created_on']
    

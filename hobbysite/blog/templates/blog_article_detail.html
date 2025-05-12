@@ -4,12 +4,53 @@
 {% block header %}🌐 Blog{% endblock %}
 {% block back_button %}<a href="{% url 'blog:list_view' %}">BACK</a>{% endblock %}
 {% block content %}
+
+    {% if article.header_image %}
+        <img src='{{ article.header_image.url }}'
+            style="max-width: 150px;">
+    {% endif %}
+   
     <text style="font-size:50px">{{ article.title }}</text>
+    <text style="color: rgba(0, 0, 0, 0.5)">Author: {{ article.author }}</text>
     <text style="color: rgba(0, 0, 0, 0.5)">Category: {{ article.category }}</text>
     <text style="color: rgba(0, 0, 0, 0.5)">Created On: {{ article.created_on }}</text>
     <text style="color: rgba(0, 0, 0, 0.5)">Updated On: {{ article.updated_on }}</text>
 	<br>
+
     <div class="text-wrap">
         {{ article.entry|linebreaks }}
     </div>
+
+    {% if owner %}
+    <a href="{% url 'blog:edit_view' article.id %}">Edit Article</a>
+    {% endif %}
+    <ul>
+        <a>Articles by the Same Author</a>
+        {% for article in common_articles %}
+            <li>
+                <a href="{% url 'blog:detail_view' article.id %}">{{ article.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <ul>
+        <h4>Comment Section<h4><br>
+        {% if request.user.is_authenticated and request.user.profile %}
+        <small>Add Comment:</small>
+        <form method="post">
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            <button type="submit" name="comment_submit">Post</button>
+        </form>
+        {% endif %}
+
+        {% for comment in comments %}
+            <div class="text-wrap">
+            {{ comment.author.display_name }}<br>
+            {{ comment.entry|linebreaksbr }}<br>
+            <small>Posted on {{ comment.created_on}} | Updated on {{ comment.updated_on}}</small><br>
+            </div>
+        {% endfor %}
+    </ul>
+
 {% endblock %}
