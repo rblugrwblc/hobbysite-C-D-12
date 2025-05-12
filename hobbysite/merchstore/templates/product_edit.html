@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Merchandise Store App{% endblock %}
+{% block header %}🛍️ Merchandise Store{% endblock %}
+{% block back_button %}<a href="{% url 'merchstore:detail_view' product.id %}">BACK</a>{% endblock %}
+{% block content %}
+	<h1>Editing {{ product.name }}</h1>
+	<h3>Owner: {{ product.owner.name }}</h3>
+	<form method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		
+		{{ form.as_p }}
+
+		<button type="submit">Update</button>
+	</form>
+{% endblock %}
