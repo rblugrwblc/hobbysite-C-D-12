@@ -13,7 +13,7 @@ class ProductTypeAdmin(admin.ModelAdmin):
         model = ProductType
 
         list_display = ('name',)
-	list_filter = ('name',)
+        list_filter = ('name',)
 
 class ProductAdmin(admin.ModelAdmin):
 	model = Product
@@ -24,7 +24,7 @@ class ProductAdmin(admin.ModelAdmin):
 class TransactionAdmin(admin.ModelAdmin):
         model = Transaction
 
-        list_display = ('buyer_name', 'product_name', 'amount', 'status')
+        list_display = ('buyer__name', 'product__name', 'amount', 'status')
 
 
 admin.site.register(ProductType, ProductTypeAdmin)
