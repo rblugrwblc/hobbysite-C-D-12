@@ -39,7 +39,7 @@ def item(request, id):
 def item_list(request):
     user = None
     products = Product.objects.all()
-    being_sold = None
+    being_sold = []
     
     if hasattr(request.user, 'profile'):
         user = request.user.profile
@@ -47,7 +47,7 @@ def item_list(request):
         being_sold = Product.objects.filter(owner=user)
     
     return render(request, 'products.html', {'products':products,
-                                             'owned':being_sold,})
+                                            'owned':being_sold,})
 
 @login_required
 def item_add(request):
