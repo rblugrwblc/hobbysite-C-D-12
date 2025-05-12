@@ -4,18 +4,30 @@
 {% block header %}🌐 Blog{% endblock %}
 {% block content %}
     <h1>Articles</h1>
-    {% for category in categories %} 
+    <a> Create New Article</a>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <a href="{% url 'blog:create_view' %}">➕ Create New Article</a>
+    </div>
+    
     <ul>
+    <a>Your Articles</a>
+    {% for article in articles_author %}
+        <li>
+            <a href="{% url 'blog:detail_view' article.id %}">{{ article.title }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+
+    {% for category in categories %} 
+    <ul>        
         <a> {{category.name}}</a>
         {% for article in articles %}
             {% if article.category.name == category.name %}
             <li>
-                <a href="{{article.get_absolute_url}}">{{ article.title }}</a>
                 <a href="{% url 'blog:detail_view' article.id %}">{{ article.title }}</a>
-                - Created on: {{ article.created_on }}
             </li>
             {% endif %}
-        {%endfor %}
+        {% endfor %}
     </ul>
     {% endfor %}
 {% endblock %}
