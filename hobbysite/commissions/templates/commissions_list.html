@@ -33,9 +33,6 @@
                     </li>
                     {% endfor %}
                 </ul>
-                <a href="{% url "commissions:add_commission" %}">
-                    <p class="button full">+ Post a new Commission</p>
-                </a>
             </section>
         </section>
         {% endif %}
@@ -52,5 +49,8 @@
                 {% endfor %}
             </ul>
         </section>
+        <a href="{% url "commissions:add_commission" %}">
+                    <p class="button full">+ Post a new Commission</p>
+        </a>
     </main>
     {% endblock %}

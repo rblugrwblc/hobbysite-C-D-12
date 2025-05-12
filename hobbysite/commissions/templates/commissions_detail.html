@@ -8,7 +8,7 @@
         <section>
             <h2>Jobs for {{ commission.title }}</h2>
             {% if user.is_authenticated and commission.creator == user.profile %}
-            <a href="">
+            <a href="{% url 'commissions:update_commission' commission.pk %}">
                 <p class="button">Edit Commission</p>
             </a>
             {% endif %}
@@ -21,8 +21,12 @@
                     <p class="status-chip">{{ job.status }}</p>
                     <section class="job-footer">
                         <p class="manpower">Manpower required: {{ job.manpower_required }}</p>
-                        {% if user.is_authenticated and commission.status == "Open" and object.creator != user.profile %}
+                        {% if user.is_authenticated and job.status == "Open" and commission.creator != user.profile %}
+                        <form method="post">
+                        {% csrf_token %}
+                            <input type="hidden" name="job_id" value="{{ job.id }}">
                         <button type="submit">Apply to Job</button>
+                        </form>
                         {% endif %}
                     </section>
                 </li>

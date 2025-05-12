@@ -1,5 +1,6 @@
 from django.db import models
 from user_management.models import Profile
+from django.urls import reverse
 
 class Commission(models.Model):
     class CommissionStatusOptions(models.TextChoices):
@@ -20,8 +21,6 @@ class Commission(models.Model):
         Profile, 
         on_delete=models.CASCADE, 
         related_name="commissions",
-        null=True,
-        blank=True,
     )
 
     class Meta:
@@ -29,6 +28,9 @@ class Commission(models.Model):
 
     def __str__(self):
         return self.title    
+    
+    def get_absolute_url(self):
+        return reverse("commission_detail", kwargs={"pk": self.pk})
     
     def update_job_full_status(self): 
         """Updates Commission Status when all jobs are filled"""
@@ -74,6 +76,9 @@ class Job(models.Model):
         self.status = self.JobStatusOptions.FULL
         self.save()
         self.commission.fill_job()
+    
+    def is_full(self):
+        return self.status == self.JobStatusOptions.FULL
 
 
 class JobApplication(models.Model):
