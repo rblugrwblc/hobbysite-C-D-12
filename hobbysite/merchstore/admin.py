@@ -24,12 +24,9 @@ class ProductAdmin(admin.ModelAdmin):
 class TransactionAdmin(admin.ModelAdmin):
         model = Transaction
 
-        list_display = ('buyer__name', 'product__name', 'amount', 'status')
+        list_display = ('buyer', 'product', 'amount', 'status')
 
 
 admin.site.register(ProductType, ProductTypeAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Transaction, TransactionAdmin)
-
-admin.site.unregister(User)
-admin.site.register(User, UserAdmin)

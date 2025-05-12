@@ -69,7 +69,7 @@ class CommissionUpdateView(UpdateView):
     template_name_suffix = "_update_form"
     
     def get_success_url(self):
-        return reverse_lazy("commissions:commission_detail", kwargs={"pk": self.object.pk})
+        return reverse_lazy("commissions:detail_view", kwargs={"pk": self.object.pk})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -86,7 +86,7 @@ class CommissionUpdateView(UpdateView):
             self.object = form.save()
             job_formset.instance = self.object
             job_formset.save()
-            self.object.update_job_full_status()  # Custom method in your model
+            self.object.update_job_full_status()
             return redirect(self.get_success_url())
         else:
             return self.form_invalid(form)
@@ -95,9 +95,9 @@ class CommissionCreateView(LoginRequiredMixin,CreateView):
     model = Commission
     fields = ["title", "description", "status"]
     template_name_suffix = "_create_form"
-    success_url = reverse_lazy("commissions:commission_list")
+    success_url = reverse_lazy("commissions:list_view")
     def form_valid(self, form):
-        form.instance.creator = self.request.user.profile  # Assign the creator here
+        form.instance.creator = self.request.user.profile
         return super().form_valid(form)
 
 class JobView(LoginRequiredMixin,DetailView):
@@ -106,7 +106,7 @@ class JobView(LoginRequiredMixin,DetailView):
     context_object_name = "job"
 
     def post(self, request, *args, **kwargs):
-        self.object = self.get_object()  # This loads the Job object into self.object
+        self.object = self.get_object()
         job = self.object
         if "accept" in request.POST:
             app_id = request.POST.get("accept")

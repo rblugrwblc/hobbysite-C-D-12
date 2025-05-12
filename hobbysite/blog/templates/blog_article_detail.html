@@ -1,24 +1,24 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}Blog App{% endblock %}
-{% block header %}🌐 Blog{% endblock %}
+{% block header %}🌐 Blog 🌐{% endblock %}
 {% block back_button %}<a href="{% url 'blog:list_view' %}">BACK</a>{% endblock %}
 {% block content %}
 
     {% if article.header_image %}
         <img src='{{ article.header_image.url }}'
-            style="max-width: 150px;">
+            style="max-width: 150px;"><br>
     {% endif %}
    
-    <text style="font-size:50px">{{ article.title }}</text>
-    <text style="color: rgba(0, 0, 0, 0.5)">Author: {{ article.author }}</text>
-    <text style="color: rgba(0, 0, 0, 0.5)">Category: {{ article.category }}</text>
-    <text style="color: rgba(0, 0, 0, 0.5)">Created On: {{ article.created_on }}</text>
-    <text style="color: rgba(0, 0, 0, 0.5)">Updated On: {{ article.updated_on }}</text>
+    <text style="font-size:50px">{{ article.title }}</text><br><br>
+    <text style="color: rgba(255, 255, 255, 0.5)">Author: {{ article.author }}</text><br>
+    <text style="color: rgba(255, 255, 255, 0.5)">Category: {{ article.category }}</text><br>
+    <text style="color: rgba(255, 255, 255, 0.5)">Created On: {{ article.created_on }}</text><br>
+    <text style="color: rgba(255, 255, 255, 0.5)">Updated On: {{ article.updated_on }}</text><br>
 	<br>
 
     {% if article.images.all %}
-        <a>Image Gallery</a>
+        <text>Image Gallery</text><br><br>
         <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
         {% for image in article.images.all %}
         <img src='{{ image.article_gallery.url }}'
@@ -26,6 +26,7 @@
         
         {% endfor %}
         </div>
+		<br>
     {% endif %}
     
     <div class="text-wrap">
@@ -35,33 +36,35 @@
     {% if owner %}
     <a href="{% url 'blog:edit_view' article.id %}">Edit Article</a>
     {% endif %}
-    <ul>
-        <a>Articles by the Same Author</a>
-        {% for article in common_articles %}
-            <li>
-                <a href="{% url 'blog:detail_view' article.id %}">{{ article.title }}</a>
-            </li>
-        {% endfor %}
-    </ul>
+	<br><br><br>
+	<hr><br>
+	<h3>Articles by the Same Author</h3>
+	<ul>
+	{% for article in common_articles %}
+		<li>
+			<a href="{% url 'blog:detail_view' article.id %}">{{ article.title }}</a>
+		</li>
+	</ul>
+	{% endfor %}
+	<br><br>
+	<hr><br>
 
-    <ul>
-        <h4>Comment Section<h4><br>
-        {% if request.user.is_authenticated and request.user.profile %}
-        <small>Add Comment:</small>
-        <form method="post">
-            {% csrf_token %}
-            {{ comment_form.as_p }}
-            <button type="submit" name="comment_submit">Post</button>
-        </form>
-        {% endif %}
-
-        {% for comment in comments %}
-            <div class="text-wrap">
-            {{ comment.author.display_name }}<br>
-            {{ comment.entry|linebreaksbr }}<br>
-            <small>Posted on {{ comment.created_on}} | Updated on {{ comment.updated_on}}</small><br>
-            </div>
-        {% endfor %}
-    </ul>
+	<h2>Comment Section</h2><br>
+	{% if request.user.is_authenticated and request.user.profile %}
+	<small>Add Comment:</small>
+	<form method="post">
+		{% csrf_token %}
+		{{ comment_form.as_p }}
+		<button type="submit" name="comment_submit">Post</button>
+	</form>
+	{% endif %}
+	<br>
+	{% for comment in comments %}
+		<div class="text-wrap">
+		{{ comment.author.display_name }}<br>
+		{{ comment.entry|linebreaksbr }}<br>
+		<small>Posted on {{ comment.created_on}} | Updated on {{ comment.updated_on}}</small><br>
+		</div>
+	{% endfor %}
 
 {% endblock %}
