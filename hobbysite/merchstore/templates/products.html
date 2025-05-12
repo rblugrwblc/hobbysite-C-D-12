@@ -4,6 +4,7 @@
 {% block header %}🛍️ Merchandise Store{% endblock %}
 {% block content %}
 	<h1>Items</h1>
+	<a href="{% url 'merchstore:add_view' %}">+</a>
 	<ul>
 		{% for product in products %}
 			<li style="font-size:20px"><a href="{% url 'merchstore:detail_view' product.id %}">{{ product.name }}</a></li>
