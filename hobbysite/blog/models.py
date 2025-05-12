@@ -47,4 +47,11 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ['-created_on']
+
+class ArticleGallery(models.Model):
+    article_gallery = models.ImageField(upload_to='images/', null=True)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name = 'images')
+
+    def __str__(self):
+        return f'Image for {self.article.title}'
    

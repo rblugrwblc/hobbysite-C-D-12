@@ -8,6 +8,11 @@
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ article_form.as_p }}
+
+        {{ gallery_formset.management_form }}
+        {% for form in gallery_formset %}
+            {{ form.as_p }}
+        {% endfor %}
         <button type="submit" name="article_submit">Post</button>
     </form>
 {% endblock %}
