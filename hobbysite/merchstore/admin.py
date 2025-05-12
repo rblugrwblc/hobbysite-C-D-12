@@ -1,12 +1,19 @@
 from django.contrib import admin
-from .models import ProductType, Product
+from django.contrib.auth.models import User
+from .models import Profile, ProductType, Product, Transaction
 
-# Register your models here.
+class ProfileInline(admin.StackedInline):
+        model = Profile
+        can_delete = False
+
+class UserAdmin(admin.ModelAdmin):
+        inlines = [ProfileInline,]
+
 class ProductTypeAdmin(admin.ModelAdmin):
-	model = ProductType
+        model = ProductType
 
-	list_display = ('name',)
-	list_filter = ('name',)
+        list_display = ('name',)
+        list_filter = ('name',)
 
 class ProductAdmin(admin.ModelAdmin):
 	model = Product
@@ -14,6 +21,12 @@ class ProductAdmin(admin.ModelAdmin):
 	list_display = ('name', 'product_type', 'price')
 	list_filter = ('name', 'product_type',)
 
+class TransactionAdmin(admin.ModelAdmin):
+        model = Transaction
+
+        list_display = ('buyer', 'product', 'amount', 'status')
+
 
 admin.site.register(ProductType, ProductTypeAdmin)
 admin.site.register(Product, ProductAdmin)
+admin.site.register(Transaction, TransactionAdmin)

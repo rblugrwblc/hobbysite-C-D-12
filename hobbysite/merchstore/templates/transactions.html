@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Merchandise Store App{% endblock %}
+{% block header %}🛍️ Merchandise Store 🛍️{% endblock %}
+{% block content %}
+	<a href="{% url 'merchstore:list_view' %}">BACK</a>
+	<br>
+	<text style="font-size:25px">Your Buyers</text><ul>
+		{% for transaction in transactions %}
+			<li style="font-size:20px">{{ transaction.product.name }} | Buyer: {{ transaction.buyer.name }} | Amount: {{ transaction.amount }} | Status: {{ transaction.status }} | Created on: {{ transaction.created_on}}</li>
+			<br>
+		{% endfor %}
+	</ul>
+{% endblock %}
