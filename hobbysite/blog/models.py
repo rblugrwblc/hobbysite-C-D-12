@@ -39,8 +39,8 @@ class Comment(models.Model):
                                 null=True,
                                 blank=True,
                                 on_delete=models.CASCADE,
-                                related_name='comments')
-    author = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, related_name='forum_comments')
+                                related_name='blog_comments')
+    author = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, related_name='blog_comments_author')
     entry = models.TextField() 
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
