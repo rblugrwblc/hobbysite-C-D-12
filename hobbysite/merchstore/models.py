@@ -36,14 +36,17 @@ class Product(models.Model):
     status = models.CharField(choices=status_options, default="Available")
 
     class Meta:
-        ordering = ['name']
+        ordering = ['owner__name']
 
     def __str__(self):
         return self.name
 
     def save(self, *args, **kwargs):
-        if self.stock == 0:
+        if self.stock <= 0:
             self.status = "Out of Stock"
+            self.stock = 0
+        else:
+            self.status = "Available" if self.status == "Out of Stock" else self.status
         super().save(*args, **kwargs)
 
 class Transaction(models.Model):
@@ -60,6 +63,9 @@ class Transaction(models.Model):
     amount = models.IntegerField(default=1)
     status = models.CharField(null=True, choices=status_options)
     created_on = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['buyer__name']
 
     def __str__(self):
         return self.buyer.name
