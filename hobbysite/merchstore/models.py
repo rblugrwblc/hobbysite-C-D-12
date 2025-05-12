@@ -25,7 +25,7 @@ class Product(models.Model):
     description = models.TextField()
     price = models.DecimalField(default=0, max_digits=100, decimal_places=2)
     stock = models.IntegerField(default=1)
-    status = models.CharField(choices=status_options, default="Available")
+    status = models.CharField(max_length=255, choices=status_options, default="Available")
 
     def __str__(self):
         return self.name
@@ -50,7 +50,7 @@ class Transaction(models.Model):
     buyer = models.ForeignKey(Profile, null=True, on_delete=models.SET_NULL)
     product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL)
     amount = models.IntegerField(default=1)
-    status = models.CharField(null=True, choices=status_options)
+    status = models.CharField(max_length=255, null=True, choices=status_options)
     created_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
