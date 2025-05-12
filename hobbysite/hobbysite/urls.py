@@ -18,21 +18,8 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib.auth import get_user_model
-from django.contrib.auth.hashers import make_password
 
 # THIS IS NOT SAFE BUT JUST FOR TESTING: 
-
-User = get_user_model()
-
-if not User.objects.filter(username="admin").exists():
-    User.objects.create(
-        username="admin",
-        password=make_password("123"),
-        is_superuser=True,
-        is_staff=True,
-        is_active=True
-    )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
