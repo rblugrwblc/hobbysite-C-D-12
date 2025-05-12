@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Commissions App{% endblock %}
+{% block header %}📝 Commissions 📝{% endblock %}
+    {% block content %}
+    <main class="card">
+        <h2>Applicants for {{ job.role }}</h2>
+            {% for application in job.applications.all %}
+            <li class="list-item">
+                <p>{{ application.applicant.display_name }}</p>
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <button name="accept" type="submit" value="{{ application.id }}">Accept</button>
+                    <button name="reject" type="submit" value="{{ application.id }}">Reject</button>
+                </form>
+            </li>
+            {% endfor %}
+    </main>
+    {% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Commissions App{% endblock %}
+{% block header %}📝 Commissions 📝{% endblock %}
+{% block content %}
+<main>
+  <h2>Commission</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <h2>Create or Edit Jobs</h2>
+    {{ job_formset.management_form }}
+    {% for job_form in job_formset %}
+      <div class="job-form">
+        {{ job_form.as_p }}
+      </div>
+    {% endfor %}
+    
+    <button type="submit">Update</button>
+  </form>
+
+  <h2>Existing Jobs</h2>
+  <ul>
+    {% for job in commission.jobs.all %}
+      <li class="list-item">
+        <span class="job-role"><strong>{{ job.role }}</strong></span>
+        <p class="status-chip">{{ job.status }}</p>
+        <section class="job-footer">
+          <p class="manpower">Manpower required: {{ job.manpower_required }}</p>
+        </section>
+      </li>
+    {% endfor %}
+  </ul>
+</main>
+{% endblock %}
