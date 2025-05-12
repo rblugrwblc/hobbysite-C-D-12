@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}Commissions App{% endblock %}
-{% block header %}📝 Commissions{% endblock %}
-{% block back_button %}<a href="{% url "commissions:commission_list" %}">BACK</a>{% endblock %}
-  {% block content %}
+{% block header %}📝 Commissions 📝{% endblock %}
+{% block content %}
+	<a href="{% url 'commissions:list_view' %}">BACK</a>
     <main class="card">
         <section>
             <h2>Jobs for {{ commission.title }}</h2>

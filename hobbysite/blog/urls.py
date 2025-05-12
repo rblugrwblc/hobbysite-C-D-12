@@ -1,4 +1,3 @@
-# <appname>/urls.py
 from django.urls import path
 from .views import blog_article_list, blog_article_detail, blog_article_create, blog_article_edit
 urlpatterns = [

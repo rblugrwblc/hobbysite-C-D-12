@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}Forum App{% endblock %}
-{% block header %}💬 Forum{% endblock %}
+{% block header %}💬 Forum 💬{% endblock %}
 {% block content %}
 
 <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -25,7 +25,7 @@
 <h2>All Threads by Category</h2>
 {% for category in categories %}
     <h3 style="margin-bottom: 0.1rem;">{{ category.name }}</h3>
-    <p style="color: rgba(0, 0, 0, 0.5); margin-bottom: 0.3rem;">{{ category.description }}</p>
+    <p style="color: rgba(255, 255, 255, 0.5); margin-bottom: 0.3rem;">{{ category.description }}</p>
     <ul>
 		{% for thread in category.filtered_threads %}
         <li style="margin-bottom: 0.2rem;">

@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
-
+{% load static %}
+{% block title %}Wiki App{% endblock %}
+{% block header %}📙 Online Wiki 📙{% endblock %}
 {% block content %}
   <h1>{% if form.instance.pk %}Edit Article{% else %}Create New Article{% endif %}</h1>
 

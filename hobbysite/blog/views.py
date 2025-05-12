@@ -1,4 +1,3 @@
-# appname/views.py
 from django.shortcuts import render,redirect
 from .models import Article, ArticleCategory
 from .forms import CommentForm, ArticleForm, ArticleGalleryFormSet
@@ -95,6 +94,3 @@ def blog_article_edit(request, article_id):
 
         
     return render(request, 'blog_article_edit.html', {'edit_form': edit_form})
-
-
-

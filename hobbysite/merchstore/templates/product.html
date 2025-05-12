@@ -1,27 +1,32 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}Merchandise Store App{% endblock %}
-{% block header %}🛍️ Merchandise Store{% endblock %}
-{% block back_button %}<a href="{% url 'merchstore:list_view' %}">BACK</a>{% endblock %}
+{% block header %}🛍️ Merchandise Store 🛍️{% endblock %}
+{% block back_button %}{% endblock %}
 {% block content %}
-	{% if product.owner.user == request.user %}
-		<a href="{% url 'merchstore:edit_view' product.id %}">Edit Product</a>
-	{% endif %}
-	<text style="font-size:50px">{{ product.name }}</text>
-	<text style="color: rgba(0, 0, 0, 0.5)">Owner: {{ product.owner.name }}</text>
-	<text style="color: rgba(0, 0, 0, 0.5)">PHP {{ product.price }}   //   Item Type: {{ product.product_type.name }}</text>
-	<text>Stock: {{ product.stock }}</text>
-	<text>Status: {{ product.status }}</text>
-	<br>
-	<text class="text-wrap"> {{ product.description }} </text>
-	<br>
-	{% if user.is_authenticated %}
-		<form method="post" enctype="multipart/form-data">
-			{% csrf_token %}
-			
-			{{ form.as_p }}
-			
-			<button type="submit" {% if product.stock == 0 %}disabled{% endif %}>Buy</button>
-		</form>
-	{% endif %}
+	<a href="{% url 'merchstore:list_view' %}">BACK</a>
+	
+	<div>
+		<text style="font-size:50px">{{ product.name }}</text>
+		{% if product.owner.user == request.user %}
+			<a href="{% url 'merchstore:edit_view' product.id %}">[ Edit Product ]</a>
+		{% endif %}
+		<br><br>
+		<text style="color: rgba(255, 255, 255, 0.5)">Owner: {{ product.owner.name }}</text><br><br>
+		<text style="color: rgba(255, 255, 255, 0.5)">PHP {{ product.price }}   //   Item Type: {{ product.product_type.name }}</text><br><br>
+		<text>Stock: {{ product.stock }}</text><br>
+		<text>Status: {{ product.status }}</text>
+		<br><br><br>
+		<text class="text-wrap"> {{ product.description }} </text>
+		<br><br><br><br>
+		{% if user.is_authenticated %}
+			<form method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+				
+				{{ form.as_p }}
+				
+				<button type="submit" {% if product.stock == 0 %}disabled{% endif %}>Buy</button>
+			</form>
+		{% endif %}
+	</div>
 {% endblock %}

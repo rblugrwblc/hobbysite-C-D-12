@@ -15,7 +15,7 @@ class ArticleCategory(models.Model):
     
 class Article(models.Model):
     title = models.CharField(max_length=255)
-    author = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, related_name='articles')
+    author = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, related_name='blog_articles')
     category = models.ForeignKey(ArticleCategory,
                                  null=True,
                                  blank=True, 
@@ -40,7 +40,7 @@ class Comment(models.Model):
                                 blank=True,
                                 on_delete=models.CASCADE,
                                 related_name='comments')
-    author = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, related_name='forum_comments')
+    author = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, related_name='blog_comments')
     entry = models.TextField() 
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
@@ -54,4 +54,3 @@ class ArticleGallery(models.Model):
 
     def __str__(self):
         return f'Image for {self.article.title}'
-   

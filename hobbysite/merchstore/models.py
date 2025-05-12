@@ -1,13 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
-
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=63)
-    email = models.EmailField()
-
-    def __str__(self):
-        return self.name
+from user_management.models import Profile
 
 class ProductType(models.Model):
     name = models.CharField(max_length=255)
@@ -35,9 +27,6 @@ class Product(models.Model):
     stock = models.IntegerField(default=1)
     status = models.CharField(choices=status_options, default="Available")
 
-    class Meta:
-        ordering = ['owner__name']
-
     def __str__(self):
         return self.name
 
@@ -63,9 +52,6 @@ class Transaction(models.Model):
     amount = models.IntegerField(default=1)
     status = models.CharField(null=True, choices=status_options)
     created_on = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ['buyer__name']
 
     def __str__(self):
         return self.buyer.name

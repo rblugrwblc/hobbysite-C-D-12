@@ -21,10 +21,13 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
     path("wiki/", include("wiki.urls", namespace="wiki")),
     path('commissions/', include("commissions.urls")),
     path('forum/', include('forum.urls')),
     path('blog/', include('blog.urls', namespace="blog")),
     path('merchstore/', include("merchstore.urls")),
     path('', include('user_management.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
