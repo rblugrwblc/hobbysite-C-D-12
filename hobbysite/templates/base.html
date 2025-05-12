@@ -1,26 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
-    <title>{% block title %}{% endblock %}</title>
+	<title>{% block title %}{% endblock %}</title>
+	{% load static %}
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
+<body style="margin-top: 0px; width:100%; margin:0 auto; font-family:verdana; background-color:#353638; color:#f6f6f6;">
+	<div class="topnav">
+		<h1 style="font-size:40px">{% block header %}{% endblock%}</h1>
+		<a href="{% url 'merchstore:list_view' %}">Merchstore</a>
+			<a href="{% url 'wiki:list_view' %}">Wiki</a>
+			<a href="{% url 'blog:list_view' %}">Blog</a>
+			<a href="{% url 'forum:list_view' %}">Forum</a>
+			<a href="{% url 'commissions:list_view' %}">Commission</a>
+		{% if user.is_authenticated %}
+			<form method="POST" action="{% url 'logout' %}">
+				{% csrf_token %}
+				<button type="submit" style="float:right; font-family:verdana;">Logout</button>
+			</form>
+		{% else %}
+			<form method="POST" action="{% url 'login' %}">
+				{% csrf_token %}
+				<button type="submit" style="float:right; font-family:verdana;">Login</button>
+			</form>
+		{% endif %}
+	</div>
 
-<style>
-    .text-wrap {
-        white-space: normal;
-        width: 360px;
-		border-radius: 6px;
-        border: 1px solid black;
-		padding: 20px;
-    }
-</style>
-
-<body>
-	<h1>{% block header %}{% endblock %}</h1>
-	<hr>
-	{% block back_button %}{% endblock %}
-	<br>
-    <div id="content" style="width: 85vw; margin: auto; display: grid">
-        {% block content %}{% endblock %}
-    </div>
+	<div style="width:75vw; margin:auto; padding-top:50px">
+		{% block content %}{% endblock %}
+	</div>
 </body>
-</html>
