@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import dj_database_url
 import os 
 from pathlib import Path
 from dotenv import load_dotenv
@@ -91,6 +92,7 @@ DATABASES = {
     }
 }
 
+DATABASES['default'] = dj_database_url.parse('postgresql://hobbysite_django_render_user:wQMAF3IAqT3jqZ2qTk5dRLdRwlxOo5uU@dpg-d0ik0ujuibrs739dnbbg-a.singapore-postgres.render.com/hobbysite_django_render')
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
